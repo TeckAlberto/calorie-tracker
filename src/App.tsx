@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useEffect, useMemo, useReducer } from "react"
+import { useEffect, useMemo } from "react"
 import Form from "./components/Form"
-import { activityReducer, initialState } from "./reducers/activityReducer"
 import ActivityList from "./components/ActivityList";
 import CalorieTracker from "./components/CalorieTracker";
+import { useActivity } from "./hooks/useActivity";
 
 function App() {
 
-  const [ state, dispatch ] = useReducer(activityReducer, initialState);
+  const { state, dispatch } = useActivity()
 
   useEffect(() => {
     localStorage.setItem('activities', JSON.stringify(state.activities));
@@ -35,28 +35,20 @@ function App() {
 
       <section className="px-5 py-20 bg-lime-500">
         <div className="max-w-4xl mx-auto">
-          <Form
-              dispatch={dispatch}
-              state={state}
-          />
+          <Form />
 
         </div>
       </section>
 
       <section className="p-10 bg-gray-800">
         <div className="max-w-4xl mx-auto">
-          <CalorieTracker
-            activities={state.activities}
-          />
+          <CalorieTracker/>
         </div>
 
       </section>
 
       <section className="max-w-4xl p-10 mx-auto">
-        <ActivityList
-          activities={state.activities}
-          dispatch={dispatch}
-        />
+        <ActivityList />
       </section>
     </>
   )
